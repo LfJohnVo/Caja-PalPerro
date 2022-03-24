@@ -25,4 +25,3 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/diario', function () {
     return view('diario');
 })->name('diario');
-Route::view('/powergrid', 'powergrid-demo');

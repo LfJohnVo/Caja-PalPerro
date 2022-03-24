@@ -19,8 +19,13 @@ class CajaComponent extends Component
         $fechahoy = date_format($date, 'd/m/Y');
 
         $caja = Caja::select('id', 'monto')->whereDate('created_at', $date)->first();
-        $this->caja_id = $caja->id;
-        $this->monto_caja = $caja->monto;
+        if ($caja) {
+            $this->caja_id = $caja->id;
+            $this->monto_caja = $caja->monto;
+        } else {
+            $this->caja_id = null;
+            $this->monto_caja = null;
+        }
 
         return view('livewire.caja-component', [
             'montocaja' => $this->monto_caja,
@@ -30,7 +35,21 @@ class CajaComponent extends Component
 
     public function save()
     {
-        $caja = Caja::where('id', $this->caja_id)->update(['monto' => $this->monto]);
+        $caja = Caja::where('id', $this->caja_id);
+
+        if (!is_null($caja->first())) {
+            $caja->update([
+                'monto' => $this->monto,
+            ]);
+        } else {
+            Caja::create([
+                'monto' => $this->monto,
+                'user_id' => auth()->user()->id,
+            ]);
+        }
+
+        $this->reset('monto');
+
         $this->alert('success', 'Caja actualizada');
     }
 }

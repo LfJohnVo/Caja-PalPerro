@@ -6,9 +6,13 @@
                 src="https://media4.giphy.com/media/12pJ8OxSWwO86Y/200w.gif?cid=82a1493be3gj640azvlr7l0zy1r05cpd9vjh83wrqp9pyuhy&rid=200w.gif&ct=g"
                 style="width: 40%;" />
             <div id="header-text" class="ml-6 leading-5 sm">
-                <h4 id="name" class="text-xl font-semibold">Fecha: </h4>
+                <h4 id="name" class="text-xl font-semibold">Fecha: {{ $fechahoy }}</h4>
                 <h5 id="job" class="font-semibold text-blue-600">Caja:
-                    ${{ $montocaja }}
+                    @if ($montocaja)
+                        $ {{ $montocaja }}
+                    @else
+                        Sin registro
+                    @endif
                 </h5>
                 <br>
                 <x-button
@@ -23,7 +27,7 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div class="col-span-1 sm:col-span-2">
                 <x-inputs.currency label="Monto" placeholder="Monto" icon="currency-dollar" thousands="," decimal="."
-                    precision="4" wire:model="monto" />
+                    precision="4" wire:model.lazy="monto" />
             </div>
         </div>
 
@@ -31,7 +35,7 @@
             <div class="flex justify-between gap-x-4">
                 <div class="flex">
                     <x-button flat label="Cancelar" x-on:click="close" />
-                    <x-button bg-green-500 label="Actualizar" wire:click="save" x-on:click="close" />
+                    <x-button bg-green-500 label="Actualizar" wire:click="save" spinner="save" x-on:click="close" />
                 </div>
             </div>
         </x-slot>

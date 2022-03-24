@@ -1,5 +1,5 @@
 <div>
-    <x-card title="Your title here">
-        // code
+    <x-card title="Ventas del dia" class="shadow-lg">
+        
     </x-card>
 </div>

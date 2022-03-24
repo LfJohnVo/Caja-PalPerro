@@ -10,4 +10,12 @@ class DiarioComponent extends Component
     {
         return view('livewire.diario-component');
     }
+
+    public function edit(){
+
+    }
+
+    public function delete(){
+
+    }
 }
